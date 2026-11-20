@@ -1,0 +1,163 @@
+/* Basisstijl prototype – het echte (GTA6-achtige) design komt later.
+   Alle kleuren staan als variabelen, zodat het thema makkelijk te vervangen is. */
+:root {
+  --bg: #0b0b0d;
+  --panel: #141418;
+  --card: #1c1c22;
+  --line: #2c2c35;
+  --text: #f2f2f5;
+  --muted: #9a9aa6;
+  --accent: #ff4fa0;
+  --accent-2: #ffb347;
+  --ok: #3ddc97;
+  --radius: 16px;
+  --font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); }
+body { padding: 24px 16px 48px; }
+
+.calc {
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 24px;
+}
+@media (max-width: 480px) { .calc { padding: 18px 16px; border-radius: 18px; } }
+
+.c-head h1 { margin: 0 0 4px; font-size: 1.5rem; }
+.c-head p { margin: 0 0 20px; color: var(--muted); }
+h2 { font-size: 1.2rem; margin: 8px 0 12px; }
+.muted { color: var(--muted); }
+.small { font-size: .85rem; }
+
+/* progress */
+.c-progress { display: flex; gap: 6px; list-style: none; padding: 0; margin: 0 0 12px; }
+.c-progress li { flex: 1; height: 5px; border-radius: 3px; background: var(--line); }
+.c-progress li.done { background: var(--accent); opacity: .55; }
+.c-progress li.cur { background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+.c-trade-tag { font-size: .85rem; color: var(--muted); margin-bottom: 4px; }
+
+/* fields */
+.c-fields { display: grid; gap: 22px; }
+.c-label { font-weight: 600; margin-bottom: 4px; display: block; }
+.c-help { color: var(--muted); font-size: .85rem; margin-bottom: 8px; }
+.c-label + .c-opts, .c-label + .c-seg, .c-label + .c-num { margin-top: 8px; }
+
+.c-opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.c-opts.big { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.c-opt {
+  display: flex; align-items: center; gap: 10px; text-align: left;
+  background: var(--card); color: var(--text); border: 1.5px solid var(--line);
+  border-radius: var(--radius); padding: 12px 14px; cursor: pointer; font: inherit;
+  transition: border-color .15s, transform .1s, background .15s;
+}
+.c-opt:hover { border-color: #4a4a57; }
+.c-opt:active { transform: scale(.98); }
+.c-opt.on { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--card)); }
+.c-opt .ic { font-size: 1.5rem; line-height: 1; }
+.c-opt b { display: block; font-weight: 600; }
+.c-opt small { display: block; color: var(--muted); font-size: .8rem; margin-top: 2px; }
+.c-opts.big .c-opt { padding: 18px; }
+.c-opts.big .ic { font-size: 2rem; }
+
+.c-seg { display: inline-flex; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 4px; gap: 4px; }
+.c-seg button { background: none; border: 0; color: var(--muted); font: inherit; padding: 8px 16px; border-radius: 999px; cursor: pointer; }
+.c-seg button.on { background: var(--text); color: var(--bg); font-weight: 600; }
+.c-seg.small { margin: 8px 0 12px; }
+.c-seg.small button { padding: 6px 12px; font-size: .85rem; }
+.c-seg.center { display: flex; width: max-content; margin: 0 auto 16px; }
+
+.c-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.c-row.four { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 520px) { .c-row.four { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 360px) { .c-row { grid-template-columns: 1fr; } }
+
+.c-in { display: block; }
+.c-in > span:first-child:not(.c-in-box) { display: block; font-size: .8rem; color: var(--muted); margin-bottom: 4px; }
+.c-in-box {
+  display: flex; align-items: center; background: var(--bg); border: 1.5px solid var(--line);
+  border-radius: 12px; padding: 0 12px; transition: border-color .15s;
+}
+.c-in-box:focus-within { border-color: var(--accent); }
+.c-in-box input, .c-in-box textarea {
+  flex: 1; min-width: 0; background: none; border: 0; outline: 0; color: var(--text);
+  font: inherit; font-size: 1.05rem; padding: 11px 0;
+}
+.c-in-box textarea { resize: vertical; }
+.c-in-box em { font-style: normal; color: var(--muted); font-size: .85rem; margin-left: 6px; }
+
+.c-num { display: flex; gap: 8px; align-items: stretch; max-width: 280px; }
+.c-num .c-in-box { flex: 1; }
+.c-num input { text-align: center; }
+.c-step {
+  width: 46px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--card);
+  color: var(--text); font-size: 1.3rem; cursor: pointer;
+}
+.c-step:hover { border-color: var(--accent); }
+
+.c-room { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; margin-bottom: 10px; }
+.c-room-head { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: .9rem; }
+.c-sum { color: var(--accent-2); font-size: .9rem; margin-top: 8px; min-height: 1.2em; }
+
+/* buttons */
+.btn {
+  font: inherit; font-weight: 600; border-radius: 999px; padding: 12px 22px; cursor: pointer;
+  border: 1.5px solid transparent; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+}
+.btn.primary { background: linear-gradient(90deg, var(--accent), var(--accent-2)); color: #111; }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn.ghost { background: none; color: var(--text); border-color: var(--line); }
+.btn.ghost:hover { border-color: #4a4a57; }
+.btn.small { padding: 8px 14px; font-size: .9rem; }
+.btn.big { padding: 16px 26px; font-size: 1.05rem; }
+.btn.wa { background: #25d366; color: #06210f; }
+.btn:disabled { opacity: .4; cursor: default; }
+.link { background: none; border: 0; color: var(--accent); cursor: pointer; font: inherit; font-size: .85rem; padding: 0 4px; text-decoration: underline; }
+
+.c-nav { display: flex; justify-content: space-between; gap: 10px; margin-top: 24px; }
+.c-err { color: #ff6b6b; min-height: 1.2em; margin: 12px 0 0; font-size: .9rem; }
+
+/* live estimate */
+.c-live {
+  position: sticky; bottom: 12px; margin-top: 20px; padding: 12px 16px; border-radius: 999px;
+  background: var(--card); border: 1px solid var(--line); text-align: center; font-size: .95rem;
+}
+.c-live.on { border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); }
+.c-live b { font-size: 1.05rem; margin: 0 4px; }
+
+/* result */
+.c-result { text-align: center; }
+.c-price {
+  font-size: clamp(2rem, 8vw, 3rem); font-weight: 800; letter-spacing: -.02em; margin: 4px 0;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.c-price span { color: var(--muted); -webkit-text-fill-color: var(--muted); font-weight: 400; }
+.c-note { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; font-size: .9rem; color: var(--text); }
+.c-break { text-align: left; margin: 18px 0; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 16px; }
+.c-break summary { cursor: pointer; font-weight: 600; }
+.c-break table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: .92rem; }
+.c-break td { padding: 7px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.c-break td:last-child { text-align: right; white-space: nowrap; padding-left: 12px; }
+.c-break td small { display: block; color: var(--muted); font-size: .8rem; }
+.c-break tr.sub td { font-weight: 600; }
+.c-break tr.tot td { font-weight: 800; border-bottom: 0; font-size: 1rem; }
+.c-cta { display: grid; gap: 10px; margin-top: 18px; }
+.c-done { width: 64px; height: 64px; margin: 8px auto; border-radius: 50%; background: var(--ok); color: #062; font-size: 2rem; display: grid; place-items: center; }
+
+/* form */
+.c-form { display: grid; gap: 14px; }
+.c-file {
+  display: block; border: 1.5px dashed var(--line); border-radius: var(--radius); padding: 16px; text-align: center; cursor: pointer;
+}
+.c-file:hover { border-color: var(--accent); }
+.c-file input { display: none; }
+.c-file small { color: var(--muted); }
+.c-file em { display: block; font-style: normal; color: var(--accent-2); font-size: .85rem; margin-top: 4px; }
+.c-check { display: flex; gap: 10px; align-items: flex-start; font-size: .88rem; color: var(--muted); }
+.c-check input { margin-top: 3px; accent-color: var(--accent); }
+
+button:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; }

@@ -5,6 +5,7 @@ import { compute, defaults, eur, eur2, fmtTime, isVisible, missingInputs, resolv
 import { addDays, todayIso } from '@/lib/dates';
 import { tradeList, trades } from '@/lib/trades';
 import { useStored } from '@/lib/useStored';
+import { track } from '@/lib/analytics';
 import type { Answers, Company, CustomLine, QuoteMeta } from '@/lib/types';
 import CustomLines from './CustomLines';
 import TradeIcon from '@/components/TradeIcon';
@@ -80,6 +81,7 @@ export default function Calculator({ initialTrade }: { initialTrade: string }) {
     if (id === tradeId) return;
     setTradeId(id);
     setAnswers(defaults(trades[id]));
+    track('vak-gekozen', { vak: id });
     window.history.replaceState(null, '', `/calculator?vak=${id}`);
   }
 
@@ -119,6 +121,7 @@ export default function Calculator({ initialTrade }: { initialTrade: string }) {
       a.click();
       a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 2000);
+      track('pdf-download', { vak: tradeId, regels: doc.result.lines.length });
     } catch (e) {
       console.error(e);
       setPdfErr('De PDF kon niet worden gemaakt. Probeer het opnieuw.');

@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import { Inter, Inter_Tight } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Script from 'next/script';
+import { Analytics } from '@vercel/analytics/next';
+import { UMAMI_ID, UMAMI_SRC } from '@/lib/analytics';
 import { site } from '@/lib/site';
 import './globals.css';
 
@@ -20,6 +23,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main>{children}</main>
         <Footer />
+        <Analytics />
+        <Script src={UMAMI_SRC} data-website-id={UMAMI_ID} strategy="afterInteractive" />
       </body>
     </html>
   );
